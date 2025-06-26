@@ -4,6 +4,10 @@
 // The target Hugging Face Space URL.
 const TARGET_HOST = 'https://coherelabs-aya-expanse.hf.space';
 
+// Import Node.js Readable stream using a dynamic import or commonjs require
+// CommonJS require is often more robust for Vercel functions
+const { Readable } = require('stream'); // Changed from import to require
+
 export default async function handler(request, response) {
   // Set CORS headers for all responses first
   response.setHeader('Access-Control-Allow-Origin', '*'); // Allow requests from any origin
@@ -30,9 +34,15 @@ export default async function handler(request, response) {
     if (request.method === 'POST') {
       if (contentType && contentType.includes('application/json')) {
         // We expect JSON, so parse it
-        requestBody = JSON.stringify(await request.json());
+        try {
+          requestBody = JSON.stringify(await request.json());
+        } catch (jsonError) {
+          console.error("Error parsing JSON body:", jsonError);
+          // If JSON parsing fails, try reading as text or just log it
+          requestBody = await request.text();
+        }
       } else {
-        // Fallback for other text-based bodies
+        // Fallback for other text-based bodies (e.g., text/plain, x-www-form-urlencoded)
         requestBody = await request.text();
       }
     }
@@ -63,14 +73,13 @@ export default async function handler(request, response) {
     // Pipe the response body from Hugging Face directly to the client
     // This supports streaming for Server-Sent Events (SSE) from Gradio.
     if (hfResponse.body) {
-      const { Readable } = await import('node:stream'); // Import Node.js Readable stream
       Readable.fromWeb(hfResponse.body).pipe(response); // Pipe web stream to Node.js response stream
     } else {
       response.end();
     }
 
   } catch (error) {
-    console.error('Proxy Error:', error);
+    console.error('Proxy Error:', error); // This log *should* now appear in Vercel logs if function is hit
     // Send a 502 Bad Gateway error if the proxy itself fails
     response.status(502).json({ error: 'Proxy failed', details: error.message });
   }
