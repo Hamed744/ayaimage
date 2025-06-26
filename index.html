@@ -1,0 +1,957 @@
+<p>&nbsp;</p>
+<style>
+        /* --- متغیرهای اصلی استایل Alpha --- */
+        :root {
+            --igadlm-alpha-color-primary: #5A67D8;
+            --igadlm-alpha-color-primary-darker: #4C51BF;
+            --igadlm-alpha-color-secondary: #805AD5;
+            --igadlm-alpha-color-secondary-darker: #6B46C1;
+            --igadlm-alpha-color-accent: #DD6B20;
+            --igadlm-alpha-color-text: #1A202C;
+            --igadlm-alpha-color-text-light: #4A5568;
+            --igadlm-alpha-color-text-muted: #718096;
+            --igadlm-alpha-color-bg-card: #FFFFFF;
+            --igadlm-alpha-color-border: #CBD5E0;
+            --igadlm-alpha-color-input-bg: #EDF2F7;
+            --igadlm-alpha-color-white: #FFFFFF;
+            --igadlm-alpha-color-success: #38A169;
+            --igadlm-alpha-color-error: #E53E3E;
+            --igadlm-alpha-color-warning-bg: #FFFBEB;
+            --igadlm-alpha-color-warning-border: #FBBF24;
+            --igadlm-alpha-color-warning-text: #B45309;
+            --igadlm-alpha-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+            --igadlm-alpha-shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --igadlm-alpha-shadow-lg: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 6px 10px -5px rgba(0, 0, 0, 0.05);
+            --igadlm-alpha-shadow-focus: 0 0 0 3px rgba(90, 103, 216, 0.35);
+            --igadlm-alpha-border-radius-md: 8px;
+            --igadlm-alpha-border-radius-lg: 12px;
+            --igadlm-alpha-transition-speed: 0.25s;
+            --igadlm-alpha-transition-easing: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- استایل‌های پایه برنامه --- */
+        body.standalone-igadlm-alpha-app { background-color: #f0f2f5; margin:0; padding:0; display: flex; flex-direction: column; align-items: center;}
+        #imageGeneratorAppAlphaV2 *, #imageGeneratorAppAlphaV2 *::before, #imageGeneratorAppAlphaV2 *::after { box-sizing: border-box; margin: 0; padding: 0; border-width: 0; border-style: solid; }
+        #imageGeneratorAppAlphaV2 { all: unset; display: block; font-family: 'Vazirmatn', 'Tahoma', sans-serif; color: var(--igadlm-alpha-color-text); line-height: 1.6; direction: rtl; padding: 20px 0; width: 100%; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; background-color: transparent; }
+        #imageGeneratorAppAlphaV2 div, #imageGeneratorAppAlphaV2 p, #imageGeneratorAppAlphaV2 h1, #imageGeneratorAppAlphaV2 h2, #imageGeneratorAppAlphaV2 h3, #imageGeneratorAppAlphaV2 label, #imageGeneratorAppAlphaV2 input, #imageGeneratorAppAlphaV2 textarea, #imageGeneratorAppAlphaV2 button, #imageGeneratorAppAlphaV2 img, #imageGeneratorAppAlphaV2 ul, #imageGeneratorAppAlphaV2 li, #imageGeneratorAppAlphaV2 span, #imageGeneratorAppAlphaV2 strong { all: revert; box-sizing: border-box; font-family: inherit; }
+        #imageGeneratorAppAlphaV2 .app-content-wrapper { display: flex; justify-content: center; width: 100%; overflow-x: hidden; }
+        #imageGeneratorAppAlphaV2 .app-content { width: 100%; max-width: 550px; padding: 0 15px; }
+        #imageGeneratorAppAlphaV2 .app-header { text-align: center; margin-bottom: 30px; }
+        #imageGeneratorAppAlphaV2 .app-header h1 { font-size: clamp(1.8em, 5.5vw, 2.3em); font-weight: 700; color: var(--igadlm-alpha-color-primary); margin-bottom: 8px; }
+        #imageGeneratorAppAlphaV2 .app-header p { font-size: 0.95em; color: var(--igadlm-alpha-color-text-light); }
+        #imageGeneratorAppAlphaV2 .form-section-card { background-color: var(--igadlm-alpha-color-bg-card); padding: 30px; border-radius: var(--igadlm-alpha-border-radius-lg); box-shadow: var(--igadlm-alpha-shadow-lg); border: 1px solid var(--igadlm-alpha-color-border); transition: opacity 0.3s ease-in-out, height 0.3s ease-in-out, padding 0.3s ease-in-out, margin 0.3s ease-in-out, border 0.3s ease-in-out; }
+        #imageGeneratorAppAlphaV2 .form-section-card.hidden-form { opacity: 0; pointer-events: none; height: 0; overflow: hidden; padding: 0; margin:0; border: none; }
+        #imageGeneratorAppAlphaV2 .form-group { margin-bottom: 20px; }
+        #imageGeneratorAppAlphaV2 .form-group label { display: block; font-size: 0.85rem; color: var(--igadlm-alpha-color-text-light); margin-bottom: 6px; font-weight: 600; }
+        #imageGeneratorAppAlphaV2 #imagePromptAlpha { width: 100%; padding: 10px 14px; border: 1px solid var(--igadlm-alpha-color-border); border-radius: var(--igadlm-alpha-border-radius-md); font-size: 0.9rem; background-color: var(--igadlm-alpha-color-input-bg); color: var(--igadlm-alpha-color-text); font-family: inherit; transition: border-color var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing), box-shadow var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing), background-color var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing); min-height: 60px; resize: vertical; -webkit-backface-visibility: hidden; backface-visibility: hidden; transform: translateZ(0); }
+        #imageGeneratorAppAlphaV2 #imagePromptAlpha::placeholder { color: var(--igadlm-alpha-color-text-muted); opacity: 0.7; }
+        #imageGeneratorAppAlphaV2 #imagePromptAlpha:focus { outline: none; border-color: var(--igadlm-alpha-color-primary); box-shadow: var(--igadlm-alpha-shadow-focus); background-color: var(--igadlm-alpha-color-white); }
+        
+        /* --- دکمه جدید کمک‌یار پرامپت --- */
+        #imageGeneratorAppAlphaV2 .prompt-helper-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 8px 12px;
+            margin-top: -10px; /* Closer to the textarea */
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--igadlm-alpha-color-secondary);
+            background-color: transparent;
+            border: 1px solid var(--igadlm-alpha-color-border);
+            border-radius: var(--igadlm-alpha-border-radius-md);
+            cursor: pointer;
+            transition: all var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing);
+        }
+        #imageGeneratorAppAlphaV2 .prompt-helper-button:hover {
+            background-color: var(--igadlm-alpha-color-input-bg);
+            border-color: var(--igadlm-alpha-color-secondary);
+            color: var(--igadlm-alpha-color-secondary-darker);
+            transform: translateY(-1px);
+            box-shadow: var(--igadlm-alpha-shadow-sm);
+        }
+
+        #imageGeneratorAppAlphaV2 #generateBtnAlpha { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 11px 16px; border-radius: var(--igadlm-alpha-border-radius-md); font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing); box-shadow: var(--igadlm-alpha-shadow-md); background: linear-gradient(60deg, var(--igadlm-alpha-color-primary) 0%, var(--igadlm-alpha-color-secondary) 100%); color: var(--igadlm-alpha-color-white); border-style: none; margin-top: 12px; }
+        #imageGeneratorAppAlphaV2 #generateBtnAlpha:hover:not(:disabled) { background: linear-gradient(60deg, var(--igadlm-alpha-color-primary-darker) 0%, var(--igadlm-alpha-color-secondary-darker) 100%); transform: translateY(-2px); box-shadow: var(--igadlm-alpha-shadow-lg); }
+        #imageGeneratorAppAlphaV2 #generateBtnAlpha:disabled { background: #cbd5e0 !important; color: #718096 !important; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
+        #imageGeneratorAppAlphaV2 #aiLoaderAlpha { display: none; flex-direction: column; align-items: center; margin: 20px auto 10px auto; }
+        #imageGeneratorAppAlphaV2 .ai-loader-bar-container-inline { display: flex; justify-content: center; align-items: flex-end; height: 25px; }
+        #imageGeneratorAppAlphaV2 .ai-loader-bar-inline { width: 5px; height: 5px; background-color: var(--igadlm-alpha-color-primary); border-radius: 2.5px; margin: 0 2.5px; animation: igadlmAlphaV2LoaderAnim 1.2s infinite ease-in-out; }
+        #imageGeneratorAppAlphaV2 .ai-loader-bar-inline:nth-child(2) { animation-delay: 0.2s; background-color: var(--igadlm-alpha-color-secondary); }
+        #imageGeneratorAppAlphaV2 .ai-loader-bar-inline:nth-child(3) { animation-delay: 0.4s; }
+        #imageGeneratorAppAlphaV2 #statusAlphaText { text-align: center; font-size: 0.85em; color: var(--igadlm-alpha-color-text-muted); font-weight: 500; margin-top: 10px; min-height: 1.4em; }
+        #imageGeneratorAppAlphaV2 #imageResultContainerAlpha { margin-top: 15px; text-align: center; display: none; }
+        #imageGeneratorAppAlphaV2 #downloadLinkStatusAlpha { font-size: 0.85em; color: var(--igadlm-alpha-color-text-light); margin-top: 10px; min-height: 1.4em; font-weight: 500; text-align: center; }
+        #imageGeneratorAppAlphaV2 .status-output-area { margin-top: 25px; min-height: 0; }
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container { background-color: var(--igadlm-alpha-color-warning-bg); padding: 25px; border-radius: var(--igadlm-alpha-border-radius-lg); box-shadow: var(--igadlm-alpha-shadow-lg); border: 2px solid var(--igadlm-alpha-color-warning-border); animation: igadlmAlphaV2fadeInUp 0.5s var(--igadlm-alpha-transition-easing) both; }
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container h2 { font-size: 1.2em; color: var(--igadlm-alpha-color-warning-text); margin-bottom: 15px; font-weight: 700; display: flex; align-items: center; border-bottom: 1px solid var(--igadlm-alpha-color-warning-border); padding-bottom: 12px; }
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container h2 .icon { margin-left: 10px; font-size: 1.3em; }
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container .error-content { font-size: 0.9rem; color: var(--igadlm-alpha-color-text-light); line-height: 1.7; word-break: break-word; white-space: pre-line; }
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container .error-content strong.error-message-title { font-weight: 600; color: var(--igadlm-alpha-color-warning-text); display: block; margin-bottom: 8px;}
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container .error-content ul { list-style-type: "▫️ "; padding-right: 20px; margin-top: 10px; }
+        #imageGeneratorAppAlphaV2 .gpu-error-message-container .error-content li { margin-bottom: 6px; }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions { display: flex; gap: 15px; margin-top: 25px; }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions .action-button { padding: 12px 20px; border: none; border-radius: var(--igadlm-alpha-border-radius-md); font-size: 0.95em; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%; box-shadow: var(--igadlm-alpha-shadow-md); transition: all var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing); text-transform: none; letter-spacing: normal; }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions .action-button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: var(--igadlm-alpha-shadow-lg); }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions .action-button.back-button { background-color: var(--igadlm-alpha-color-bg-card); color: var(--igadlm-alpha-color-text-muted); border: 1px solid var(--igadlm-alpha-color-border); flex-grow: 0.45; }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions .action-button.back-button:hover:not(:disabled) { background-color: var(--igadlm-alpha-color-input-bg); }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions .action-button.retry-button { background: linear-gradient(60deg, var(--igadlm-alpha-color-primary) 0%, var(--igadlm-alpha-color-secondary) 100%); color: white; flex-grow: 1; }
+        #imageGeneratorAppAlphaV2 .gpu-error-actions .action-button.retry-button:hover:not(:disabled) { background: linear-gradient(60deg, var(--igadlm-alpha-color-primary-darker) 0%, var(--igadlm-alpha-color-secondary-darker) 100%); }
+        @keyframes igadlmAlphaV2LoaderAnim { 0%, 100% { transform: scaleY(0.5); opacity: 0.5; } 50% { transform: scaleY(1.5); opacity: 1; height: 15px; } }
+        @keyframes igadlmAlphaV2fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        #imageGeneratorAppAlphaV2 #imageDescriptionOutput { margin-top: 15px; padding: 15px; background-color: var(--igadlm-alpha-color-input-bg); border: 1px solid var(--igadlm-alpha-color-border); border-radius: var(--igadlm-alpha-border-radius-md); font-size: 0.85rem; color: var(--igadlm-alpha-color-text-light); font-style: italic; text-align: right; line-height: 1.5; box-shadow: var(--igadlm-alpha-shadow-sm); display: none; word-break: break-word; position: relative; padding-right: 50px; }
+        #imageGeneratorAppAlphaV2 #copyDescriptionBtn { position: absolute; top: 8px; right: 8px; background-color: transparent; color: var(--igadlm-alpha-color-text-muted); border: 1px solid var(--igadlm-alpha-color-border); padding: 4px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; z-index: 20; box-shadow: var(--igadlm-alpha-shadow-sm); display: none; font-weight: 500; line-height: 1; display: flex; align-items: center; justify-content: center; }
+        #imageGeneratorAppAlphaV2 #copyDescriptionBtn svg { display: block; color: var(--igadlm-alpha-color-text-muted); }
+        #imageGeneratorAppAlphaV2 #copyDescriptionBtn:hover { background-color: var(--igadlm-alpha-color-input-bg); color: var(--igadlm-alpha-color-primary); border-color: var(--igadlm-alpha-color-primary); transform: translateY(-1px); box-shadow: var(--igadlm-alpha-shadow-md); }
+        #imageGeneratorAppAlphaV2 #copyDescriptionBtn:hover svg { color: var(--igadlm-alpha-color-primary); }
+        #imageGeneratorAppAlphaV2 #copyDescriptionBtn:active { transform: translateY(0); box-shadow: none; }
+        #imageGeneratorAppAlphaV2 #copyStatusMessage { position: absolute; top: 8px; right: 40px; font-size: 0.7rem; color: var(--igadlm-alpha-color-success); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; white-space: nowrap; }
+        #imageGeneratorAppAlphaV2 .image-grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; margin-top: 25px; justify-content: center; }
+        @media (min-width: 480px) { #imageGeneratorAppAlphaV2 .image-grid-container { grid-template-columns: repeat(2, 1fr); } }
+        #imageGeneratorAppAlphaV2 .image-item { background-color: var(--igadlm-alpha-color-bg-card); border-radius: var(--igadlm-alpha-border-radius-md); box-shadow: var(--igadlm-alpha-shadow-md); overflow: hidden; border: 1px solid var(--igadlm-alpha-color-border); display: flex; flex-direction: column; align-items: center; padding: 10px; position: relative; min-height: 180px; justify-content: center; }
+        #imageGeneratorAppAlphaV2 .image-item img.generated-image-item { max-width: 100%; height: auto; min-height: 120px; background-color: var(--igadlm-alpha-color-input-bg); border-radius: var(--igadlm-alpha-border-radius-md); margin-bottom: 10px; object-fit: contain; border: 1px dashed var(--igadlm-alpha-color-border); display: block; transition: opacity 0.3s ease; }
+        #imageGeneratorAppAlphaV2 .image-loader-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.8); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: var(--igadlm-alpha-border-radius-md); z-index: 10; transition: opacity 0.3s ease; opacity: 0; pointer-events: none; }
+        #imageGeneratorAppAlphaV2 .image-loader-overlay.active { opacity: 1; pointer-events: all; }
+        #imageGeneratorAppAlphaV2 .image-loader-overlay .loader-text { color: var(--igadlm-alpha-color-text-muted); font-size: 0.8rem; margin-top: 10px; }
+        #imageGeneratorAppAlphaV2 .image-item .download-button { width: 100%; padding: 9px 12px; border-radius: var(--igadlm-alpha-border-radius-md); font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing); background-color: var(--igadlm-alpha-color-white); color: var(--igadlm-alpha-color-primary); border: 1px solid var(--igadlm-alpha-color-border); box-shadow: var(--igadlm-alpha-shadow-sm); display: none; margin-top: 5px; }
+        #imageGeneratorAppAlphaV2 .image-item .download-button:hover:not(:disabled) { background: linear-gradient(60deg, var(--igadlm-alpha-color-primary) 0%, var(--igadlm-alpha-color-secondary) 100%); color: var(--igadlm-alpha-color-white); border-color: transparent; transform: translateY(-2px); box-shadow: var(--igadlm-alpha-shadow-md); }
+        #imageGeneratorAppAlphaV2 .image-item .download-button:disabled { background-color: var(--igadlm-alpha-color-input-bg) !important; color: var(--igadlm-alpha-color-text-muted) !important; border-color: var(--igadlm-alpha-color-border) !important; box-shadow: none !important; transform: none !important; cursor: not-allowed; }
+
+        /* --- استایل‌های جدید برای مودال کمک‌یار پرامپت --- */
+        .alpha-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(26, 32, 44, 0.6);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInBackdrop 0.3s var(--igadlm-alpha-transition-easing) forwards;
+        }
+
+        .alpha-modal-content {
+            background-color: var(--igadlm-alpha-color-bg-card);
+            border-radius: var(--igadlm-alpha-border-radius-lg);
+            box-shadow: var(--igadlm-alpha-shadow-lg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding: 25px;
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+            animation: fadeInModal 0.3s var(--igadlm-alpha-transition-easing) 0.1s forwards;
+        }
+
+        .alpha-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--igadlm-alpha-color-border);
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .alpha-modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--igadlm-alpha-color-primary);
+        }
+
+        .alpha-modal-close-btn {
+            background-color: transparent;
+            border: none;
+            font-size: 2rem;
+            line-height: 1;
+            color: var(--igadlm-alpha-color-text-muted);
+            cursor: pointer;
+            transition: color var(--igadlm-alpha-transition-speed);
+        }
+
+        .alpha-modal-close-btn:hover {
+            color: var(--igadlm-alpha-color-error);
+        }
+
+        .alpha-modal-body {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-left: 10px; /* Space for scrollbar */
+            margin-left: -10px;
+        }
+        
+        /* Custom scrollbar for modal body */
+        .alpha-modal-body::-webkit-scrollbar { width: 8px; }
+        .alpha-modal-body::-webkit-scrollbar-track { background: var(--igadlm-alpha-color-input-bg); border-radius: 4px; }
+        .alpha-modal-body::-webkit-scrollbar-thumb { background: var(--igadlm-alpha-color-border); border-radius: 4px; }
+        .alpha-modal-body::-webkit-scrollbar-thumb:hover { background: var(--igadlm-alpha-color-text-muted); }
+
+        .alpha-modal-footer {
+            padding-top: 15px;
+            margin-top: 15px;
+            border-top: 1px solid var(--igadlm-alpha-color-border);
+            text-align: center;
+        }
+
+        .prompt-category-item, .prompt-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--igadlm-alpha-color-input-bg);
+            padding: 12px 15px;
+            border-radius: var(--igadlm-alpha-border-radius-md);
+            border: 1px solid var(--igadlm-alpha-color-border);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing);
+        }
+
+        .prompt-category-item:hover, .prompt-item:hover {
+            border-color: var(--igadlm-alpha-color-primary);
+            background-color: var(--igadlm-alpha-color-white);
+            transform: translateY(-2px);
+            box-shadow: var(--igadlm-alpha-shadow-md);
+        }
+        
+        .prompt-category-item {
+            font-weight: 600;
+            color: var(--igadlm-alpha-color-text-light);
+        }
+
+        .prompt-item .prompt-text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: right;
+            flex-grow: 1;
+        }
+
+        .prompt-item .prompt-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--igadlm-alpha-color-text);
+            direction: ltr; /* English prompts */
+            text-align: left;
+            align-self: flex-start;
+        }
+
+        .prompt-item .persian-translation {
+            font-size: 0.8rem;
+            color: var(--igadlm-alpha-color-text-muted);
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .pagination-button, .alpha-modal-footer .modal-action-button {
+            padding: 8px 16px;
+            border-radius: var(--igadlm-alpha-border-radius-md);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all var(--igadlm-alpha-transition-speed) var(--igadlm-alpha-transition-easing);
+            box-shadow: var(--igadlm-alpha-shadow-sm);
+        }
+
+        .pagination-button {
+            background-color: var(--igadlm-alpha-color-primary);
+            color: var(--igadlm-alpha-color-white);
+            border: none;
+        }
+        .pagination-button:hover {
+            background-color: var(--igadlm-alpha-color-primary-darker);
+            transform: translateY(-1px);
+        }
+
+        .alpha-modal-footer .modal-action-button {
+            background-color: var(--igadlm-alpha-color-input-bg);
+            color: var(--igadlm-alpha-color-text-muted);
+            border: 1px solid var(--igadlm-alpha-color-border);
+        }
+         .alpha-modal-footer .modal-action-button:hover {
+            background-color: var(--igadlm-alpha-color-white);
+            border-color: var(--igadlm-alpha-color-text-light);
+            color: var(--igadlm-alpha-color-text-light);
+         }
+
+        .page-info {
+            font-size: 0.85rem;
+            color: var(--igadlm-alpha-color-text-muted);
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        @keyframes fadeInBackdrop { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInModal { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        
+    </style>
+<div id="imageGeneratorAppAlphaV2">
+<div class="app-content-wrapper">
+<div class="app-content">
+<div class="app-header">
+<h1>✨ مولد تصویر (<span style="font-size: 8pt;">سریع نامحدود</span>)Alpha&nbsp;</h1>
+<p>ایده خود را به تصاویر خلاقانه توسط هوش مصنوعی Alpha تبدیل کنید.</p>
+</div>
+<div class="form-section-card" id="alphaFormSectionCard">
+<div class="form-group"><label for="imagePromptAlpha">دستور ساخت تصویر (فارسی یا انگلیسی):</label> <textarea id="imagePromptAlpha" rows="3" placeholder="مثال: یک گربه فضانورد روی ماه، سبک کارتونی"></textarea></div>
+<!-- دکمه جدید کمک‌یار پرامپت --> <button id="promptHelperBtn" class="prompt-helper-button">💡 افزودن سبک (پرامپت ها)</button> <button id="generateBtnAlpha">🎨 ساخت ۴ تصویر</button>
+<div class="ai-loader-inline" id="aiLoaderAlpha">
+<div class="ai-loader-bar-container-inline">
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+</div>
+</div>
+<div id="statusAlphaText">وضعیت: آماده برای تولید تصویر.</div>
+<div id="imageDescriptionOutput"><span id="copyStatusMessage" style="display: none;"></span> <button id="copyDescriptionBtn" title="کپی توضیحات" style="display: none;"> <svg class="feather feather-copy" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="display: block;" viewbox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg"> <rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> </button>
+<p id="descriptionTextContent" style="margin: 0; padding: 0;">&nbsp;</p>
+</div>
+<div id="imageResultContainerAlpha">
+<div class="image-grid-container"><!-- Image Items will be populated by JS -->
+<div class="image-item" id="imageItem-0">
+<div class="image-loader-overlay">
+<div class="ai-loader-bar-container-inline">
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+</div>
+<span class="loader-text">در حال تولید...</span></div>
+<img class="generated-image-item" data-index="0" alt="تصویر ۱" /> <button class="download-button" data-index="0">📥 دانلود تصویر</button></div>
+<div class="image-item" id="imageItem-1">
+<div class="image-loader-overlay">
+<div class="ai-loader-bar-container-inline">
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+</div>
+<span class="loader-text">در حال تولید...</span></div>
+<img class="generated-image-item" data-index="1" alt="تصویر ۲" /> <button class="download-button" data-index="1">📥 دانلود تصویر</button></div>
+<div class="image-item" id="imageItem-2">
+<div class="image-loader-overlay">
+<div class="ai-loader-bar-container-inline">
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+</div>
+<span class="loader-text">در حال تولید...</span></div>
+<img class="generated-image-item" data-index="2" alt="تصویر ۳" /> <button class="download-button" data-index="2">📥 دانلود تصویر</button></div>
+<div class="image-item" id="imageItem-3">
+<div class="image-loader-overlay">
+<div class="ai-loader-bar-container-inline">
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+<div class="ai-loader-bar-inline"></div>
+</div>
+<span class="loader-text">در حال تولید...</span></div>
+<img class="generated-image-item" data-index="3" alt="تصویر ۴" /> <button class="download-button" data-index="3">📥 دانلود تصویر</button></div>
+</div>
+</div>
+</div>
+<div class="status-output-area" id="alphaStatusOutputArea"></div>
+</div>
+</div>
+</div>
+<p>
+<script>
+    (function() {
+        // --- بخش اصلی برنامه Alpha ---
+        const appContainer = document.getElementById('imageGeneratorAppAlphaV2');
+        if (!appContainer) { console.error("App container not found!"); return; }
+        if (window.self === window.top) { document.body.classList.add('standalone-igadlm-alpha-app'); }
+
+        const formSectionCard = appContainer.querySelector('#alphaFormSectionCard');
+        const statusOutputArea = appContainer.querySelector('#alphaStatusOutputArea');
+        const generateBtn = appContainer.querySelector('#generateBtnAlpha');
+        const statusTextDiv = appContainer.querySelector('#statusAlphaText');
+        const imageResultContainer = appContainer.querySelector('#imageResultContainerAlpha');
+        const aiLoader = appContainer.querySelector('#aiLoaderAlpha');
+        const imagePromptInput = appContainer.querySelector('#imagePromptAlpha');
+        const imageDescriptionOutputDiv = appContainer.querySelector('#imageDescriptionOutput');
+        const descriptionTextContentP = appContainer.querySelector('#descriptionTextContent');
+        const copyDescriptionBtn = appContainer.querySelector('#copyDescriptionBtn');
+        const copyStatusMessage = appContainer.querySelector('#copyStatusMessage');
+        const generatedImageItems = appContainer.querySelectorAll('.generated-image-item');
+        const downloadButtons = appContainer.querySelectorAll('.download-button');
+        const imageLoaders = appContainer.querySelectorAll('.image-loader-overlay');
+        
+        // --- تنظیمات پراکسی Vercel ---
+        // این PROXY_URL به تابع سرورلس 'api/proxy.js' در پروژه Vercel شما اشاره می کند.
+        // Vercel به صورت خودکار آن را به آدرس صحیح دامنه شما ترجمه می کند.
+        const PROXY_URL = '/api/proxy'; 
+        // HF_SPACE_URL_BASE اکنون به پراکسی شما اشاره می کند.
+        const HF_SPACE_URL_BASE = PROXY_URL; 
+        // --- پایان تنظیمات پراکسی Vercel ---
+
+        const FN_INDEX_GENERATE_PROMPT = 17;
+        const FN_INDEX_GENERATE_IMAGE = 18;
+        const DEFAULT_GUIDANCE_SCALE = 7.0;
+        const DEFAULT_INFERENCE_STEPS = 50;
+        // آدرس سرور آپلود شما برای دانلود نهایی تصاویر
+        const YOUR_IMAGE_UPLOAD_SERVER_URL = 'https://www.aisada.ir/hamed/upload.php'; 
+        let currentEventSource = null;
+        let lastAttemptedPayload = null;
+        let finalGeneratedImageUrlsFromSpace = [];
+        const GPU_QUOTA_INSTRUCTIONS_HTML_VIDEO_STYLE = `<h2><span class="icon">💡</span> راهنمای رفع محدودیت GPU</h2><div class="error-content"><strong class="error-message-title">ارور محدودیت استفاده از GPU</strong><p>مدل‌های هوش مصنوعی برای اجرا به کارت‌های گرافیک بسیار قدرتمند نیاز دارند که این امر گاهی محدودیت‌هایی در استفاده از آن‌ها ایجاد می‌کند. با این حال، خبر خوب این است که این محدودیت‌ها با استفاده از یک ترفند ساده قابل رفع هستند.</p><p><strong>برای رفع محدودیت هر بار اینگونه عمل کنید:</strong></p><ul><li>اگر از اینترنت سیم‌کارت استفاده می‌کنید، فیلترشکن خود را حتماً خاموش کنید.</li><li>به مدت ۱۰ تا ۱۵ ثانیه، گوشی خود را در حالت هواپیما قرار دهید و سپس آن را غیرفعال کنید. این محدودیت با همین روش برداشته می‌شود.</li><li>اگر از وای فای استفاده می‌کنید، مودم خود را یک بار خاموش و روشن کنید (بهتر است برای استفاده نامحدود از برنامه از اینترنت سیم کارت استفاده کنید).</li></ul><p>خلاصه: هربار این صفحه اومد اینگونه عمل کنید از اینترنت سیم کارت استفاده کنید، فیلتر شکن خاموش باشه، یک یا دوبار حالت هواپیما رو روشن و خاموش کنید. تلاش مجدداً بزنید این ارور بر طرف میشه، با این روش میشه بصورت نامحدود با این برنامه تصاویر ساخت☘️</p></div>`;
+        
+        async function retryableOperation(operation, maxRetries = 3, delayMs = 2500, onRetry) { 
+            for (let attempt = 1; attempt <= maxRetries; attempt++) { 
+                try { return await operation(); } 
+                catch (error) { 
+                    if (error && error.type === "gpu_quota") { throw error; } 
+                    console.warn(`Operation failed on attempt ${attempt}. Error:`, error); 
+                    if (attempt < maxRetries) { 
+                        if (onRetry) { onRetry(attempt, maxRetries); } 
+                        await new Promise(resolve => setTimeout(resolve, delayMs)); 
+                    } else { 
+                        console.error("All retry attempts failed."); throw error; 
+                    } 
+                } 
+            } 
+        }
+
+        function generateSessionHash() { return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15); }
+        
+        function showMainForm() { 
+            formSectionCard.classList.remove('hidden-form'); 
+            const existingGpuErrorMsg = statusOutputArea.querySelector('.gpu-error-message-container'); 
+            if (existingGpuErrorMsg) existingGpuErrorMsg.remove(); 
+            imageResultContainer.style.display = 'none'; 
+            imageDescriptionOutputDiv.style.display = 'none'; 
+            descriptionTextContentP.textContent = ""; 
+            copyDescriptionBtn.style.display = 'none'; 
+            copyStatusMessage.style.opacity = '0'; 
+            copyStatusMessage.textContent = ''; 
+            generatedImageItems.forEach((img, idx) => { 
+                img.src = ""; img.alt = `تصویر ${idx + 1}`; img.style.opacity = '0'; 
+                imageLoaders[idx].classList.remove('active'); 
+            }); 
+            downloadButtons.forEach(btn => { 
+                btn.style.display = 'none'; btn.disabled = false; btn.textContent = "📥 دانلود تصویر"; 
+            }); 
+        }
+        
+        function updateStatus(messageOrError, type = "info", showLoader = false) { 
+            statusTextDiv.innerHTML = ''; 
+            aiLoader.style.display = showLoader ? 'flex' : 'none'; 
+            formSectionCard.classList.remove('hidden-form'); 
+            const existingGpuErrorMsg = statusOutputArea.querySelector('.gpu-error-message-container'); 
+            if (existingGpuErrorMsg) { existingGpuErrorMsg.remove(); } 
+            let messageText = ""; 
+            let isGpuError = false; 
+            if (typeof messageOrError === 'object' && messageOrError !== null && messageOrError.type === "gpu_quota") { 
+                isGpuError = true; messageText = messageOrError.message; 
+            } else if (typeof messageOrError === 'string') { 
+                messageText = messageOrError; 
+                const msgLower = messageText.toLowerCase(); 
+                if (msgLower.includes("gpu") || msgLower.includes("cuda") || msgLower.includes("quota") || msgLower.includes("capacity") || msgLower.includes("load") || msgLower.includes("queue full")) { 
+                    isGpuError = true; 
+                } 
+            } else { 
+                messageText = String(messageOrError || "پیام نامشخص"); 
+            } 
+            if (isGpuError) { 
+                formSectionCard.classList.add('hidden-form'); 
+                aiLoader.style.display = 'none'; 
+                statusTextDiv.innerHTML = ''; 
+                imageResultContainer.style.display = 'none'; 
+                imageDescriptionOutputDiv.style.display = 'none'; 
+                const gpuErrorContainer = document.createElement('div'); 
+                gpuErrorContainer.className = 'gpu-error-message-container'; 
+                gpuErrorContainer.innerHTML = GPU_QUOTA_INSTRUCTIONS_HTML_VIDEO_STYLE; 
+                const actionsDiv = document.createElement('div'); 
+                actionsDiv.className = 'gpu-error-actions'; 
+                const btnRetry = document.createElement('button'); 
+                btnRetry.className = 'action-button retry-button'; 
+                btnRetry.textContent = 'تلاش مجدد'; 
+                btnRetry.onclick = () => { showMainForm(); if (lastAttemptedPayload) { startFullProcess(true); } else { updateStatus("آماده برای تلاش مجدد.", "info", false); } }; 
+                const btnBack = document.createElement('button'); 
+                btnBack.className = 'action-button back-button'; 
+                btnBack.textContent = 'بازگشت به فرم'; 
+                btnBack.onclick = () => { showMainForm(); updateStatus("وضعیت: آماده برای تولید تصویر.", "info", false); }; 
+                actionsDiv.appendChild(btnBack); 
+                actionsDiv.appendChild(btnRetry); 
+                gpuErrorContainer.appendChild(actionsDiv); 
+                statusOutputArea.innerHTML = ''; 
+                statusOutputArea.appendChild(gpuErrorContainer); 
+            } else { 
+                statusTextDiv.textContent = messageText; 
+                if (type === "success") { statusTextDiv.style.color = "var(--igadlm-alpha-color-success)"; statusTextDiv.style.fontWeight = "600"; } 
+                else if (type === "error") { statusTextDiv.style.color = "var(--igadlm-alpha-color-error)"; statusTextDiv.style.fontWeight = "600"; } 
+                else { statusTextDiv.style.color = "var(--igadlm-alpha-color-text-muted)"; statusTextDiv.style.fontWeight = "500"; } 
+            } 
+        }
+
+        async function callGradioApi(baseUrl, fnIndex, dataPayload, sessionHash, triggerId = null) { 
+            const joinUrl = `${baseUrl}/gradio_api/queue/join`; 
+            const apiPayload = { data: dataPayload, event_data: null, fn_index: fnIndex, session_hash: sessionHash }; 
+            if (triggerId !== null) apiPayload.trigger_id = triggerId; 
+            const response = await fetch(joinUrl, { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify(apiPayload) 
+            }); 
+            if (!response.ok) { 
+                let errorData = {}; 
+                try { errorData = await response.json(); } catch(e) {} 
+                const errorDetail = (errorData.detail || errorData.error || `HTTP ${response.status} - ${response.statusText}`).toString(); 
+                const errorDetailLower = errorDetail.toLowerCase(); 
+                if (errorDetailLower.includes("cuda") || errorDetailLower.includes("gpu") || errorDetailLower.includes("quota") || errorDetailLower.includes("capacity") || errorDetailLower.includes("load") || errorDetailLower.includes("queue full")) { 
+                    throw { type: "gpu_quota", message: `سرور با محدودیت منابع (GPU) مواجه است: ${errorDetail.substring(0,150)}` }; 
+                } 
+                throw new Error(`خطا در ارتباط اولیه (${baseUrl.split('//')[1]?.split('.')[0] || 'پراکسی'}): ${errorDetail.substring(0,100)}`); 
+            } 
+            const result = await response.json(); 
+            if (!result.event_id && result.error) { 
+                throw new Error(`خطا از سرور (${baseUrl.split('//')[1]?.split('.')[0] || 'پراکسی'}) در /queue/join: ${result.error}`); 
+            } 
+            if (!result.event_id) { 
+                throw new Error(`event_id از /queue/join (fn_index: ${fnIndex}) برای ${baseUrl.split('//')[1]?.split('.')[0] || 'پراکسی'} دریافت نشد.`); 
+            } 
+            return result.event_id; 
+        }
+        
+        function listenToGradioSse(baseUrl, sessionHash, eventId, serviceName, onProgress) { 
+            return new Promise((resolve, reject) => { 
+                if (currentEventSource) { 
+                    try { currentEventSource.close(); } catch(e) { console.warn("Error closing previous EventSource:", e); } 
+                    currentEventSource = null; 
+                } 
+                const dataUrl = `${baseUrl}/gradio_api/queue/data?session_hash=${sessionHash}`; 
+                currentEventSource = new EventSource(dataUrl); 
+                currentEventSource.onmessage = function(event) { 
+                    const eventData = JSON.parse(event.data); 
+                    if (onProgress) onProgress(eventData); 
+                    if (eventData.event_id && eventData.event_id !== eventId && !["close_stream", "queue_full", "estimation", "log", "process_starts", "process_generating"].includes(eventData.msg)) { 
+                        return; 
+                    } 
+                    if (eventData.msg === "process_completed") { 
+                        currentEventSource.close(); 
+                        currentEventSource = null; 
+                        if (eventData.success && eventData.output && eventData.output.data) { 
+                            resolve(eventData.output.data); 
+                        } else { 
+                            const errorMsg = eventData.output?.error || `خروجی نامعتبر یا خطا در تکمیل پردازش ${serviceName}.`; 
+                            const errorMsgLower = errorMsg.toLowerCase(); 
+                            if (errorMsgLower.includes("cuda") || errorMsgLower.includes("gpu") || errorMsgLower.includes("quota") || errorMsgLower.includes("capacity") || errorMsgLower.includes("load") || errorMsgLower.includes("queue full")) { 
+                                reject({ type: "gpu_quota", message: `پردازش ${serviceName} با خطای منابع (GPU) مواجه شد: ${errorMsg}` }); 
+                            } else { 
+                                reject(new Error(`پردازش ${serviceName} با خطا مواجه شد: ${errorMsg}`)); 
+                            } 
+                        } 
+                    } else if (eventData.msg === "queue_full") { 
+                        currentEventSource.close(); 
+                        currentEventSource = null; 
+                        reject({ type: "gpu_quota", message: `صف ${serviceName} پر است. لطفاً کمی بعد تلاش کنید.` }); 
+                    } else if (eventData.msg === "close_stream") { 
+                        currentEventSource.close(); 
+                        currentEventSource = null; 
+                        reject(new Error(`جریان نتایج سرور برای ${serviceName} به طور غیرمنتظره‌ای بسته شد.`)); 
+                    } 
+                }; 
+                currentEventSource.onerror = function(err) { 
+                    console.error("خطا در EventSource:", err); 
+                    currentEventSource.close(); 
+                    currentEventSource = null; 
+                    reject(new Error(`خطا در اتصال به جریان نتایج سرور ${serviceName}.`)); 
+                }; 
+            }); 
+        }
+        
+        async function generatePrompt(userPrompt) { 
+            updateStatus("مرحله ۱ از ۲: در حال تولید توضیحات تصویر...", "info", true); 
+            const sessionHash = generateSessionHash(); 
+            const payload = [userPrompt]; 
+            const eventId = await callGradioApi(HF_SPACE_URL_BASE, FN_INDEX_GENERATE_PROMPT, payload, sessionHash); 
+            const result = await listenToGradioSse(HF_SPACE_URL_BASE, sessionHash, eventId, "PromptGenerator", (eventData) => { 
+                if (eventData.msg === "process_generating" && eventData.log) { 
+                    updateStatus(`مرحله ۱: ${eventData.log}`, "info", true); 
+                } 
+            }); 
+            if (result && result[0] && typeof result[0] === 'string') { 
+                descriptionTextContentP.textContent = `توضیحات تولید شده برای تصویر: ${result[0]}`; 
+                imageDescriptionOutputDiv.style.display = 'block'; 
+                copyDescriptionBtn.style.display = 'flex'; 
+                return result[0]; 
+            } else { 
+                copyDescriptionBtn.style.display = 'none'; 
+                throw new Error("نتیجه معتبری از سرویس تولید توضیحات دریافت نشد."); 
+            } 
+        }
+        
+        async function generateSingleImage(imagePrompt, imageIndex) { 
+            const sessionHash = generateSessionHash(); 
+            const randomSeed = Math.floor(Math.random() * 2147483647); 
+            const imageGenPayload = [ imagePrompt, DEFAULT_GUIDANCE_SCALE, DEFAULT_INFERENCE_STEPS, randomSeed ]; 
+            imageLoaders[imageIndex].classList.add('active'); 
+            generatedImageItems[imageIndex].style.opacity = '0'; 
+            generatedImageItems[imageIndex].src = ''; 
+            updateStatus(`مرحله ۲ از ۲: در حال ساخت تصویر ${imageIndex + 1} از ۴...`, "info", true); 
+            const eventId = await callGradioApi(HF_SPACE_URL_BASE, FN_INDEX_GENERATE_IMAGE, imageGenPayload, sessionHash); 
+            let previewUrl = null; 
+            const imageResult = await listenToGradioSse(HF_SPACE_URL_BASE, sessionHash, eventId, `ImageGenerator-${imageIndex}`, (eventData) => { 
+                if (eventData.msg === "process_generating" && eventData.output && eventData.output.data) { 
+                    const outputData = eventData.output.data[0]; 
+                    if (outputData && typeof outputData === 'object' && outputData.url) { 
+                        // Gradio might give a relative path like /file=..., convert to full URL on HF space, then get path
+                        const fullUrlOnHfSpace = outputData.url.startsWith("http") ? outputData.url : `https://coherelabs-aya-expanse.hf.space${outputData.url.startsWith('/') ? '' : '/'}${outputData.url}`;
+                        
+                        // Use the proxied URL for display
+                        const imagePath = new URL(fullUrlOnHfSpace).pathname + new URL(fullUrlOnHfSpace).search;
+                        const proxiedDisplayUrl = `${PROXY_URL}${imagePath}`;
+
+                        generatedImageItems[imageIndex].src = proxiedDisplayUrl; 
+                        generatedImageItems[imageIndex].style.opacity = '1'; 
+                        imageLoaders[imageIndex].classList.remove('active'); 
+                        previewUrl = fullUrlOnHfSpace; // Keep original HF URL for potential later upload to AISADA
+                        updateStatus(`مرحله ۲: تصویر ${imageIndex + 1} در حال بارگذاری پیش‌نمایش...`, "info", true); 
+                    } 
+                } else if (eventData.msg === "process_generating" && eventData.log) { 
+                    updateStatus(`مرحله ۲: تصویر ${imageIndex + 1}: ${eventData.log}`, "info", true); 
+                } 
+            }); 
+            imageLoaders[imageIndex].classList.remove('active'); 
+            generatedImageItems[imageIndex].style.opacity = '1'; 
+            if (imageResult && imageResult[0] && typeof imageResult[0] === 'object' && imageResult[0].url) { 
+                // Return the original Hugging Face URL for final processing/upload
+                const finalUrl = imageResult[0].url.startsWith("http") ? imageResult[0].url : `https://coherelabs-aya-expanse.hf.space${imageResult[0].url.startsWith('/') ? '' : '/'}${imageResult[0].url}`;
+                return finalUrl; 
+            } else if (previewUrl) { 
+                console.warn(`Final image URL not directly in process_completed for image ${imageIndex}, using last preview URL.`); 
+                return previewUrl; 
+            } else { 
+                throw new Error(`URL تصویر نهایی برای تصویر ${imageIndex + 1} دریافت نشد.`); 
+            } 
+        }
+
+        async function uploadToAISADAAndOpenAlpha(imageUrlFromSpace, downloadButtonElement) { 
+            if (!imageUrlFromSpace) { 
+                downloadButtonElement.textContent = "خطا: URL تصویر موجود نیست."; 
+                downloadButtonElement.disabled = false; 
+                return; 
+            } 
+            downloadButtonElement.textContent = 'در حال ساخت لینک دانلود...'; 
+            downloadButtonElement.disabled = true; 
+            try { 
+                // مرحله جدید: دانلود تصویر از طریق پراکسی Vercel
+                // imageUrlFromSpace هنوز URL اصلی Hugging Face است.
+                // ما باید این درخواست را نیز از طریق پراکسی Vercel انجام دهیم.
+                const urlObjectForPath = new URL(imageUrlFromSpace);
+                const imagePathForProxy = urlObjectForPath.pathname + urlObjectForPath.search;
+                const proxiedDownloadUrl = `${PROXY_URL}${imagePathForProxy}`;
+
+                downloadButtonElement.textContent = 'دریافت فایل از سرور...';
+
+                const imageResponse = await fetch(proxiedDownloadUrl);
+
+                if (!imageResponse.ok) throw new Error(`خطا در دریافت فایل از طریق پراکسی Vercel: ${imageResponse.status}`); 
+                const imageBlob = await imageResponse.blob(); 
+                const formData = new FormData(); 
+                let filename = `generated_aya_expanse_image_${Date.now()}.webp`; 
+                try { 
+                    const urlPath = new URL(imageUrlFromSpace).pathname.split('/').pop(); 
+                    if(urlPath && urlPath.includes('.')) { 
+                        filename = urlPath.split('?')[0]; 
+                    } else { 
+                        if (imageBlob.type.includes('image/png')) filename += '.png'; 
+                        else if (imageBlob.type.includes('image/jpeg')) filename += '.jpeg'; 
+                        else filename += '.webp'; 
+                    } 
+                } catch(e){ console.warn("Could not parse filename from HF URL:", e); } 
+                formData.append('image', imageBlob, filename); 
+                
+                // آپلود به سرور نهایی شما (aisada.ir)
+                const uploadResponse = await fetch(YOUR_IMAGE_UPLOAD_SERVER_URL, { 
+                    method: 'POST', 
+                    body: formData, 
+                }); 
+                if (!uploadResponse.ok) { 
+                    const errorText = await uploadResponse.text().catch(() => `HTTP ${uploadResponse.status}`); 
+                    throw new Error(`آپلود به سرور شما ناموفق: ${errorText}`); 
+                } 
+                const uploadData = await uploadResponse.json(); 
+                if (uploadData.success && uploadData.url) { 
+                    downloadButtonElement.textContent = '✅ دانلود تصویر'; 
+                    downloadButtonElement.disabled = false; 
+                    window.open(uploadData.url, '_blank'); 
+                } else { 
+                    throw new Error(uploadData.message || 'خطا در پاسخ سرور آپلود شما.'); 
+                } 
+            } catch (error) { 
+                console.error("خطا در فرآیند دانلود و آپلود تصویر:", error); 
+                downloadButtonElement.textContent = "❌ خطا در دانلود"; 
+                downloadButtonElement.disabled = false; 
+            } 
+        }
+        
+        async function startFullProcess(isRetry = false) { 
+            if (!isRetry) { lastAttemptedPayload = { prompt: imagePromptInput.value }; } 
+            else if (!lastAttemptedPayload) { updateStatus("خطا: اطلاعاتی برای تلاش مجدد موجود نیست.", "error", false); generateBtn.disabled = false; return; } 
+            generateBtn.disabled = true; 
+            showMainForm(); 
+            updateStatus("در حال آماده سازی...", "info", true); 
+            finalGeneratedImageUrlsFromSpace = []; 
+            const currentPrompt = isRetry ? lastAttemptedPayload.prompt : imagePromptInput.value; 
+            generatedImageItems.forEach((img, idx) => { 
+                img.src = ""; img.alt = `تصویر ${idx + 1}`; 
+                imageLoaders[idx].classList.remove('active'); 
+                downloadButtons[idx].style.display = 'none'; 
+                downloadButtons[idx].disabled = false; 
+                downloadButtons[idx].textContent = '📥 دانلود تصویر'; 
+                downloadButtons[idx].onclick = null; 
+                generatedImageItems[idx].style.opacity = '0'; 
+            }); 
+            imageResultContainer.style.display = 'block'; 
+            try { 
+                const onRetryCallback = (attempt, max) => { 
+                    updateStatus(`ارتباط با سرور برقرار نشد. تلاش مجدد (${attempt}/${max})...`, "info", true); 
+                }; 
+                const enhancedPrompt = await retryableOperation( 
+                    () => generatePrompt(currentPrompt), 3, 2500, onRetryCallback 
+                ); 
+                for (let i = 0; i < 4; i++) { 
+                    updateStatus(`مرحله ۲ از ۲: در حال ساخت تصویر ${i + 1} از ۴...`, "info", true); 
+                    const imageUrl = await retryableOperation( 
+                        () => generateSingleImage(enhancedPrompt, i), 3, 2500, onRetryCallback 
+                    ); 
+                    finalGeneratedImageUrlsFromSpace[i] = imageUrl; 
+                    // Note: generatedImageItems[i].src is already set in generateSingleImage for preview.
+                    // If you want to ensure the final, full-res image is displayed, you might update it here.
+                    // But for now, the preview is good enough and the download button uses the finalUrl.
+                    
+                    generatedImageItems[i].style.opacity = '1'; 
+                    imageLoaders[i].classList.remove('active'); 
+                    generatedImageItems[i].onload = () => { console.log(`Image ${i+1} loaded: ${imageUrl}`); }; 
+                    generatedImageItems[i].onerror = () => { console.error(`خطا در بارگذاری تگ <img> برای URL: ${imageUrl}`); }; 
+                    downloadButtons[i].style.display = 'inline-flex'; 
+                    downloadButtons[i].onclick = () => uploadToAISADAAndOpenAlpha(imageUrl, downloadButtons[i]); 
+                } 
+                updateStatus("تمام تصاویر با موفقیت ساخته شدند!", "success", false); 
+            } catch (error) { 
+                console.error("خطا در فرآیند کلی تولید تصویر:", error); 
+                updateStatus(error, "error", false); 
+                if (!statusOutputArea.querySelector('.gpu-error-message-container')) { 
+                    const anyImageLoaded = Array.from(generatedImageItems).some(img => img.src && img.src !== window.location.href); 
+                    if (!anyImageLoaded) { 
+                        imageResultContainer.style.display = 'none'; 
+                        imageDescriptionOutputDiv.style.display = 'none'; 
+                    } 
+                } 
+            } finally { 
+                generateBtn.disabled = false; 
+                const isGpuErrorDisplayed = statusOutputArea.querySelector('.gpu-error-message-container'); 
+                if (aiLoader.style.display === 'flex' && !statusTextDiv.textContent.includes("موفقیت") && !isGpuErrorDisplayed) { 
+                    aiLoader.style.display = 'none'; 
+                    if (!statusTextDiv.textContent && !isGpuErrorDisplayed) { 
+                        updateStatus("عملیات متوقف شد یا با خطا مواجه شد.", "info", false); 
+                    } 
+                } 
+                imageLoaders.forEach(loader => loader.classList.remove('active')); 
+            } 
+        }
+        
+        copyDescriptionBtn.addEventListener('click', async () => { 
+            const textToCopy = descriptionTextContentP.textContent; 
+            if (textToCopy) { 
+                try { 
+                    await navigator.clipboard.writeText(textToCopy); 
+                    copyStatusMessage.textContent = 'کپی شد!'; 
+                    copyStatusMessage.style.color = 'var(--igadlm-alpha-color-success)'; 
+                    copyStatusMessage.style.opacity = '1'; 
+                    copyStatusMessage.style.display = 'block'; 
+                    setTimeout(() => { copyStatusMessage.style.opacity = '0'; copyStatusMessage.style.display = 'none'; }, 2000); 
+                } catch (err) { 
+                    console.error('Failed to copy text: ', err); 
+                    copyStatusMessage.textContent = 'خطا!'; 
+                    copyStatusMessage.style.color = 'var(--igadlm-alpha-color-error)'; 
+                    copyStatusMessage.style.opacity = '1'; 
+                    copyStatusMessage.style.display = 'block'; 
+                    setTimeout(() => { copyStatusMessage.style.opacity = '0'; copyStatusMessage.style.display = 'none'; }, 2000); 
+                } 
+            } 
+        });
+        
+        generateBtn.addEventListener('click', () => startFullProcess(false));
+        showMainForm();
+        updateStatus("وضعیت: آماده برای تولید تصویر.", "info", false);
+
+        // --- بخش جدید: منطق کمک‌یار پرامپت ---
+
+        const promptHelperBtn = appContainer.querySelector('#promptHelperBtn');
+        let activeModal = null;
+        let currentPromptListPage = 1;
+        const promptsPageSize = 10;
+
+        const promptsData = {
+            "lighting": [{"text": "Cinematic lighting", "translation": "نورپردازی سینمایی"}, {"text": "Soft lighting", "translation": "نورپردازی نرم"}, {"text": "Softbox lighting", "translation": "نورپردازی با سافت‌باکس"}, {"text": "Bright lighting", "translation": "نورپردازی روشن"}, {"text": "Ambient lighting", "translation": "نورپردازی محیطی"}, {"text": "Silhouetted", "translation": "سایه‌دار"}, {"text": "Flat lighting", "translation": "نورپردازی تخت"}, {"text": "Backlit Volumetric lighting", "translation": "نورپردازی حجمی پس‌زمینه"}],
+            "special_lighting": [{"text": "Neon", "translation": "نئون"}, {"text": "Holographic", "translation": "هولوگرافیک"}, {"text": "Glow", "translation": "تابان"}, {"text": "Bioluminescent", "translation": "زیست‌تاب"}, {"text": "Rimlight", "translation": "نور حاشیه‌ای"}, {"text": "Silhouetted", "translation": "سایه‌دار"}],
+            "details_quality": [{"text": "Ultra photoreal", "translation": "فوق‌العاده واقع‌گرایانه"}, {"text": "Intricate details", "translation": "جزئیات پیچیده"}, {"text": "Photorealistic", "translation": "فوتورئالیستی"}, {"text": "Hyper detailed", "translation": "بسیار جزئیات‌دار"}, {"text": "Ultra detailed", "translation": "فوق‌العاده جزئیات‌دار"}, {"text": "Extremely detailed", "translation": "بسیار پرجزئیات"}, {"text": "4K", "translation": "4K"}, {"text": "8K", "translation": "8K"}, {"text": "Super resolution", "translation": "وضوح فوق‌العاده"}, {"text": "High resolution", "translation": "وضوح بالا"}],
+            "punk": [{"text": "Steampunk", "translation": "استیم‌پانک"}, {"text": "Cloudpunk", "translation": "کلودپانک"}, {"text": "Cyberpunk", "translation": "سایبرپانک"}, {"text": "Forestpunk", "translation": "فورست‌پانک"}, {"text": "Decopunk", "translation": "دکوپانک"}, {"text": "Atompunk", "translation": "اتم‌پانک"}, {"text": "Dieselpunk", "translation": "دیزل‌پانک"}, {"text": "Biopunk", "translation": "بیوپانک"}, {"text": "Dinopunk", "translation": "دینوپانک"}, {"text": "Cassettepunk", "translation": "کاست‌پانک"}, {"text": "Dollupunk", "translation": "دالاپانک"}, {"text": "Catholicpunk", "translation": "کاتولیک‌پانک"}, {"text": "Clockpunk", "translation": "کلاک‌پانک"}],
+            "landscape": [{"text": "Surreal landscape", "translation": "منظره سورئال"}, {"text": "Unreal landscape", "translation": "منظره غیرواقعی"}, {"text": "Fantasy landscape", "translation": "منظره فانتزی"}, {"text": "Sci-fi landscape", "translation": "منظره علمی-تخیلی"}, {"text": "Desert landscape", "translation": "منظره بیابانی"}, {"text": "Tropical paradise", "translation": "بهشت گرمسیری"}, {"text": "Rainforest scenery", "translation": "منظره جنگل بارانی"}, {"text": "Expansive mountain range", "translation": "زنجیره کوهستانی گسترده"}],
+            "colors": [{"text": "Retro colors", "translation": "رنگ‌های رترو"}, {"text": "Vivid colors", "translation": "رنگ‌های زنده"}, {"text": "Pastel colors", "translation": "رنگ‌های پاستلی"}, {"text": "Neon colors", "translation": "رنگ‌های نئونی"}, {"text": "Earthy tones", "translation": "رنگ‌های خاکی"}, {"text": "Primary colors", "translation": "رنگ‌های اصلی"}, {"text": "Monochromatic colors", "translation": "رنگ‌های تک‌رنگ"}, {"text": "Jewel tones", "translation": "رنگ‌های جواهری"}],
+            "artist_style": [{"text": "in the style of Leonardo da Vinci", "translation": "به سبک لئوناردو داوینچی"}, {"text": "in the style of Michelangelo", "translation": "به سبک میکل‌آنجلو"}, {"text": "in the style of Rembrandt", "translation": "به سبک رامبراند"}, {"text": "in the style of Vermeer", "translation": "به سبک ورمیر"}, {"text": "in the style of Claude Monet", "translation": "به سبک کلود مونه"}, {"text": "in the style of Vincent van Gogh", "translation": "به سبک ونسان ون گوگ"}, {"text": "in the style of Pablo Picasso", "translation": "به سبک پابلو پیکاسو"}, {"text": "in the style of Salvador Dalí", "translation": "به سبک سالوادور دالی"}, {"text": "in the style of Frida Kahlo", "translation": "به سبک فریدا کالو"}],
+            "iranian_art_identity": [{"text": "Persian Carpet Weaving style", "translation": "سبک قالی‌بافی ایرانی"}, {"text": "Persian Tilework style", "translation": "سبک کاشی‌کاری ایرانی"}, {"text": "Persian Miniature Painting style", "translation": "سبک نگارگری ایرانی"}, {"text": "Persian Calligraphy style", "translation": "سبک خوشنویسی ایرانی"}, {"text": "Traditional Persian Textiles", "translation": "منسوجات سنتی ایرانی"}, {"text": "Persian Woodcarving (Monabatkari)", "translation": "منبت‌کاری ایرانی"}, {"text": "Persian Mirrorwork (Aine-kari)", "translation": "آینه‌کاری ایرانی"}, {"text": "Termeh Weaving style", "translation": "سبک بافت ترمه"}, {"text": "Qajar art style", "translation": "سبک هنر قاجار"}],
+            "iranian_set_design": [{"text": "Modern Tehran vibe", "translation": "حال و هوای مدرن تهران"}, {"text": "Esfahan architectural vibe", "translation": "حال و هوای معماری اصفهان"}, {"text": "Shiraz garden atmosphere", "translation": "فضای باغ شیراز"}, {"text": "Yazd desert city look", "translation": "نمای شهر کویری یزد"}, {"text": "Traditional Persian house interior", "translation": "فضای داخلی خانه سنتی ایرانی"}, {"text": "Persian empire aesthetic", "translation": "زیبایی‌شناسی امپراتوری پارس"}, {"text": "Sassanian art influence", "translation": "تحت تأثیر هنر ساسانی"}]
+        };
+
+        const promptCategoryNames = {
+            "lighting": "نورپردازی 💡", "special_lighting": "نورپردازی خاص ✨", "details_quality": "جزئیات و کیفیت 🔍",
+            "punk": "سبک‌های پانک 🎸", "landscape": "منظره 🌄", "colors": "رنگ‌ها 🎨",
+            "artist_style": "به سبک هنرمندان 🖌️", "iranian_art_identity": "هویت هنری ایرانی 🏺", "iranian_set_design": "فضاسازی ایرانی 🏙️"
+        };
+        
+        function createAlphaModal(title, bodyHtml, footerButtons = []) {
+            if (activeModal) {
+                activeModal.remove();
+            }
+            const backdrop = document.createElement('div');
+            backdrop.className = 'alpha-modal-backdrop';
+            
+            const modalContent = document.createElement('div');
+            modalContent.className = 'alpha-modal-content';
+
+            modalContent.innerHTML = `
+                <div class="alpha-modal-header">
+                    <h2>${title}</h2>
+                    <button class="alpha-modal-close-btn">×</button>
+                </div>
+                <div class="alpha-modal-body">
+                    ${bodyHtml}
+                </div>
+            `;
+            
+            if (footerButtons.length > 0) {
+                const footer = document.createElement('div');
+                footer.className = 'alpha-modal-footer';
+                footerButtons.forEach(btnConfig => {
+                    const button = document.createElement('button');
+                    button.textContent = btnConfig.text;
+                    button.className = 'modal-action-button';
+                    button.onclick = (e) => {
+                        e.preventDefault();
+                        btnConfig.onclick();
+                    };
+                    footer.appendChild(button);
+                });
+                modalContent.appendChild(footer);
+            }
+            
+            backdrop.appendChild(modalContent);
+            document.body.appendChild(backdrop);
+            activeModal = backdrop;
+            
+            backdrop.querySelector('.alpha-modal-close-btn').onclick = () => activeModal.remove();
+            backdrop.onclick = (e) => {
+                if (e.target === backdrop) {
+                    activeModal.remove();
+                }
+            };
+            return modalContent;
+        }
+
+        function insertPromptIntoTextarea(text) {
+            const currentValue = imagePromptInput.value.trim();
+            if (currentValue === '') {
+                imagePromptInput.value = text;
+            } else {
+                imagePromptInput.value = currentValue + ', ' + text;
+            }
+            imagePromptInput.focus();
+            imagePromptInput.dispatchEvent(new Event('input', { bubbles: true }));
+            
+            if (activeModal) {
+                activeModal.remove();
+                activeModal = null;
+            }
+        }
+
+        function showPromptCategoriesNotification() {
+            let contentHtml = '';
+            for (const categoryKey in promptCategoryNames) {
+                contentHtml += `<div class="prompt-category-item" data-category-key="${categoryKey}">${promptCategoryNames[categoryKey]}</div>`;
+            }
+
+            const modalElement = createAlphaModal('دسته‌بندی پرامپت‌ها', contentHtml);
+            modalElement.querySelectorAll('.prompt-category-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    showPromptListNotification(this.dataset.categoryKey);
+                });
+            });
+        }
+
+        function showPromptListNotification(categoryKey) {
+            currentPromptListPage = 1;
+            const prompts = promptsData[categoryKey];
+            const categoryName = promptCategoryNames[categoryKey].replace(/<[^>]*>/g, '');
+            const totalPages = Math.ceil(prompts.length / promptsPageSize);
+
+            const renderPage = () => {
+                let listHtml = '';
+                const start = (currentPromptListPage - 1) * promptsPageSize;
+                const end = start + promptsPageSize;
+                prompts.slice(start, end).forEach(prompt => {
+                    listHtml += `
+                        <div class="prompt-item" data-prompt-text="${prompt.text}">
+                            <div class="prompt-text-container">
+                                <div class="prompt-text">${prompt.text}</div>
+                                <div class="persian-translation">${prompt.translation}</div>
+                            </div>
+                        </div>`;
+                });
+
+                let paginationHtml = '';
+                if (totalPages > 1) {
+                    paginationHtml = `
+                        <div class="pagination-container">
+                            <button class="pagination-button" id="prevPageBtn" ${currentPromptListPage === 1 ? 'disabled' : ''}> قبلی </button>
+                            <span class="page-info">${currentPromptListPage} از ${totalPages}</span>
+                            <button class="pagination-button" id="nextPageBtn" ${currentPromptListPage === totalPages ? 'disabled' : ''}> بعدی </button>
+                        </div>`;
+                }
+                return listHtml + paginationHtml;
+            };
+
+            const modalElement = createAlphaModal(
+                `پرامپت‌های ${categoryName}`,
+                renderPage(),
+                [{ text: 'بازگشت به دسته‌بندی‌ها', onclick: showPromptCategoriesNotification }]
+            );
+
+            const updateAndRebind = () => {
+                modalElement.querySelector('.alpha-modal-body').innerHTML = renderPage();
+                bindListEvents();
+            };
+
+            const bindListEvents = () => {
+                modalElement.querySelectorAll('.prompt-item').forEach(item => {
+                    item.onclick = () => insertPromptIntoTextarea(item.dataset.promptText);
+                });
+                const prevBtn = modalElement.querySelector('#prevPageBtn');
+                const nextBtn = modalElement.querySelector('#nextPageBtn');
+                if (prevBtn) prevBtn.onclick = () => { if (currentPromptListPage > 1) { currentPromptListPage--; updateAndRebind(); }};
+                if (nextBtn) nextBtn.onclick = () => { if (currentPromptListPage < totalPages) { currentPromptListPage++; updateAndRebind(); }};
+            };
+            
+            bindListEvents();
+        }
+
+        promptHelperBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPromptCategoriesNotification();
+        });
+
+    })();
+</script>
+</p>
