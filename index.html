@@ -1,5 +1,12 @@
-<p>&nbsp;</p>
-<style>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مولد تصویر هوش مصنوعی Alpha - سریع و نامحدود</title>
+    <meta name="description" content="ایده خود را به تصاویر خلاقانه توسط هوش مصنوعی Alpha تبدیل کنید.">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
         /* --- متغیرهای اصلی استایل Alpha --- */
         :root {
             --igadlm-alpha-color-primary: #5A67D8;
@@ -298,11 +305,13 @@
         @keyframes fadeInModal { from { opacity: 0; transform: translateY(-20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
         
     </style>
+</head>
+<body>
 <div id="imageGeneratorAppAlphaV2">
 <div class="app-content-wrapper">
 <div class="app-content">
 <div class="app-header">
-<h1>✨ مولد تصویر (<span style="font-size: 8pt;">سریع نامحدود</span>)Alpha&nbsp;</h1>
+<h1>✨ مولد تصویر (<span style="font-size: 8pt;">سریع نامحدود</span>)Alpha </h1>
 <p>ایده خود را به تصاویر خلاقانه توسط هوش مصنوعی Alpha تبدیل کنید.</p>
 </div>
 <div class="form-section-card" id="alphaFormSectionCard">
@@ -317,7 +326,7 @@
 </div>
 <div id="statusAlphaText">وضعیت: آماده برای تولید تصویر.</div>
 <div id="imageDescriptionOutput"><span id="copyStatusMessage" style="display: none;"></span> <button id="copyDescriptionBtn" title="کپی توضیحات" style="display: none;"> <svg class="feather feather-copy" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style="display: block;" viewbox="0 0 24 24" width="14" xmlns="http://www.w3.org/2000/svg"> <rect height="13" rx="2" ry="2" width="13" x="9" y="9"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path> </svg> </button>
-<p id="descriptionTextContent" style="margin: 0; padding: 0;">&nbsp;</p>
+<p id="descriptionTextContent" style="margin: 0; padding: 0;"> </p>
 </div>
 <div id="imageResultContainerAlpha">
 <div class="image-grid-container"><!-- Image Items will be populated by JS -->
@@ -364,7 +373,6 @@
 </div>
 </div>
 </div>
-<p>
 <script>
     (function() {
         // --- بخش اصلی برنامه Alpha ---
@@ -388,10 +396,7 @@
         const imageLoaders = appContainer.querySelectorAll('.image-loader-overlay');
         
         // --- تنظیمات پراکسی Vercel ---
-        // این PROXY_URL به تابع سرورلس 'api/proxy.js' در پروژه Vercel شما اشاره می کند.
-        // Vercel به صورت خودکار آن را به آدرس صحیح دامنه شما ترجمه می کند.
         const PROXY_URL = '/api/proxy'; 
-        // HF_SPACE_URL_BASE اکنون به پراکسی شما اشاره می کند.
         const HF_SPACE_URL_BASE = PROXY_URL; 
         // --- پایان تنظیمات پراکسی Vercel ---
 
@@ -399,12 +404,11 @@
         const FN_INDEX_GENERATE_IMAGE = 18;
         const DEFAULT_GUIDANCE_SCALE = 7.0;
         const DEFAULT_INFERENCE_STEPS = 50;
-        // آدرس سرور آپلود شما برای دانلود نهایی تصاویر
         const YOUR_IMAGE_UPLOAD_SERVER_URL = 'https://www.aisada.ir/hamed/upload.php'; 
         let currentEventSource = null;
         let lastAttemptedPayload = null;
-        let finalGeneratedImageUrlsFromSpace = [];
-        const GPU_QUOTA_INSTRUCTIONS_HTML_VIDEO_STYLE = `<h2><span class="icon">💡</span> راهنمای رفع محدودیت GPU</h2><div class="error-content"><strong class="error-message-title">ارور محدودیت استفاده از GPU</strong><p>مدل‌های هوش مصنوعی برای اجرا به کارت‌های گرافیک بسیار قدرتمند نیاز دارند که این امر گاهی محدودیت‌هایی در استفاده از آن‌ها ایجاد می‌کند. با این حال، خبر خوب این است که این محدودیت‌ها با استفاده از یک ترفند ساده قابل رفع هستند.</p><p><strong>برای رفع محدودیت هر بار اینگونه عمل کنید:</strong></p><ul><li>اگر از اینترنت سیم‌کارت استفاده می‌کنید، فیلترشکن خود را حتماً خاموش کنید.</li><li>به مدت ۱۰ تا ۱۵ ثانیه، گوشی خود را در حالت هواپیما قرار دهید و سپس آن را غیرفعال کنید. این محدودیت با همین روش برداشته می‌شود.</li><li>اگر از وای فای استفاده می‌کنید، مودم خود را یک بار خاموش و روشن کنید (بهتر است برای استفاده نامحدود از برنامه از اینترنت سیم کارت استفاده کنید).</li></ul><p>خلاصه: هربار این صفحه اومد اینگونه عمل کنید از اینترنت سیم کارت استفاده کنید، فیلتر شکن خاموش باشه، یک یا دوبار حالت هواپیما رو روشن و خاموش کنید. تلاش مجدداً بزنید این ارور بر طرف میشه، با این روش میشه بصورت نامحدود با این برنامه تصاویر ساخت☘️</p></div>`;
+        let finalGeneratedImageUrlsFromSpace = []; // This will now store the AISADA.ir URLs
+        const GPU_QUOTA_INSTRUCTIONS_HTML_VIDEO_STYLE = `<h2><span class="icon">💡</span> راهنمای رفع محدودیت GPU</h2><div class="error-content"><strong class="error-message-title">ارور محدودیت استفاده از GPU</strong><p>مدل‌های هوش مصنوعی برای اجرا به کارت‌های گرافیک بسیار قدرتمند نیاز دارند که این امر گاهی محدودیت‌هایی در استفاده از آن‌ها ایجاد می‌کند. با این حال، خبر خوب این است که این محدودیت‌ها با استفاده از یک ترفید ساده قابل رفع هستند.</p><p><strong>برای رفع محدودیت هر بار اینگونه عمل کنید:</strong></p><ul><li>اگر از اینترنت سیم‌کارت استفاده می‌کنید، فیلترشکن خود را حتماً خاموش کنید.</li><li>به مدت ۱۰ تا ۱۵ ثانیه، گوشی خود را در حالت هواپیما قرار دهید و سپس آن را غیرفعال کنید. این محدودیت با همین روش برداشته می‌شود.</li><li>اگر از وای فای استفاده می‌کنید، مودم خود را یک بار خاموش و روشن کنید (بهتر است برای استفاده نامحدود از برنامه از اینترنت سیم کارت استفاده کنید).</li></ul><p>خلاصه: هربار این صفحه اومد اینگونه عمل کنید از اینترنت سیم کارت استفاده کنید، فیلتر شکن خاموش باشه، یک یا دوبار حالت هواپیما رو روشن و خاموش کنید. تلاش مجدداً بزنید این ارور بر طرف میشه، با این روش میشه بصورت نامحدود با این برنامه تصاویر ساخت☘️</p></div>`;
         
         async function retryableOperation(operation, maxRetries = 3, delayMs = 2500, onRetry) { 
             for (let attempt = 1; attempt <= maxRetries; attempt++) { 
@@ -591,111 +595,169 @@
             } 
         }
         
+        // تابع جدید کمکی برای آپلود تصویر به AISADA.ir در پس‌زمینه
+        async function uploadImageToAisada(imageBlob, originalHfImageUrl, imageIndex) {
+            const aisadaDownloadButton = downloadButtons[imageIndex];
+            aisadaDownloadButton.textContent = 'در حال آپلود برای دانلود...';
+            aisadaDownloadButton.disabled = true;
+
+            try {
+                const formData = new FormData();
+                let filename = `generated_aya_expanse_image_${Date.now()}.webp`; // Default filename
+
+                // Try to get a better filename from the original Hugging Face URL
+                try {
+                    const urlPath = new URL(originalHfImageUrl).pathname.split('/').pop();
+                    if(urlPath && urlPath.includes('.')) {
+                        filename = urlPath.split('?')[0]; // Remove query params if any
+                    } else {
+                        // Fallback to determine extension from Blob type
+                        if (imageBlob.type.includes('image/png')) filename += '.png';
+                        else if (imageBlob.type.includes('image/jpeg')) filename += '.jpeg';
+                        else filename += '.webp';
+                    }
+                } catch(e){ 
+                    console.warn("Could not parse filename from HF URL for upload:", e); 
+                    // Fallback to determining extension from Blob type if URL parsing fails
+                    if (imageBlob.type.includes('image/png')) filename += '.png';
+                    else if (imageBlob.type.includes('image/jpeg')) filename += '.jpeg';
+                    else filename += '.webp';
+                }
+                
+                formData.append('image', imageBlob, filename);
+
+                const uploadResponse = await fetch(YOUR_IMAGE_UPLOAD_SERVER_URL, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!uploadResponse.ok) {
+                    const errorText = await uploadResponse.text().catch(() => `HTTP ${uploadResponse.status}`);
+                    throw new Error(`آپلود به سرور شما (AISADA) ناموفق: ${errorText}`);
+                }
+                const uploadData = await uploadResponse.json();
+                
+                if (uploadData.success && uploadData.url) {
+                    console.log(`Image ${imageIndex + 1} uploaded to AISADA: ${uploadData.url}`);
+                    aisadaDownloadButton.textContent = '✅ دانلود تصویر';
+                    aisadaDownloadButton.disabled = false;
+                    return uploadData.url; // Return the AISADA URL
+                } else {
+                    throw new Error(uploadData.message || 'خطا در پاسخ سرور آپلود AISADA.');
+                }
+            } catch (uploadError) {
+                console.error(`خطا در آپلود تصویر ${imageIndex + 1} به AISADA:`, uploadError);
+                aisadaDownloadButton.textContent = '❌ خطا در آپلود';
+                aisadaDownloadButton.disabled = false;
+                return null; // Return null on failure
+            }
+        }
+
+
         async function generateSingleImage(imagePrompt, imageIndex) { 
             const sessionHash = generateSessionHash(); 
             const randomSeed = Math.floor(Math.random() * 2147483647); 
             const imageGenPayload = [ imagePrompt, DEFAULT_GUIDANCE_SCALE, DEFAULT_INFERENCE_STEPS, randomSeed ]; 
             imageLoaders[imageIndex].classList.add('active'); 
             generatedImageItems[imageIndex].style.opacity = '0'; 
-            generatedImageItems[imageIndex].src = ''; 
+            generatedImageItems[imageIndex].src = ''; // Clear previous image
+            
             updateStatus(`مرحله ۲ از ۲: در حال ساخت تصویر ${imageIndex + 1} از ۴...`, "info", true); 
+            
             const eventId = await callGradioApi(HF_SPACE_URL_BASE, FN_INDEX_GENERATE_IMAGE, imageGenPayload, sessionHash); 
-            let previewUrl = null; 
-            const imageResult = await listenToGradioSse(HF_SPACE_URL_BASE, sessionHash, eventId, `ImageGenerator-${imageIndex}`, (eventData) => { 
-                if (eventData.msg === "process_generating" && eventData.output && eventData.output.data) { 
-                    const outputData = eventData.output.data[0]; 
-                    if (outputData && typeof outputData === 'object' && outputData.url) { 
-                        // Gradio might give a relative path like /file=..., convert to full URL on HF space, then get path
-                        const fullUrlOnHfSpace = outputData.url.startsWith("http") ? outputData.url : `https://coherelabs-aya-expanse.hf.space${outputData.url.startsWith('/') ? '' : '/'}${outputData.url}`;
-                        
-                        // Use the proxied URL for display
-                        const imagePath = new URL(fullUrlOnHfSpace).pathname + new URL(fullUrlOnHfSpace).search;
-                        const proxiedDisplayUrl = `${PROXY_URL}${imagePath}`;
+            
+            let finalHfImageUrl = null; 
 
-                        generatedImageItems[imageIndex].src = proxiedDisplayUrl; 
-                        generatedImageItems[imageIndex].style.opacity = '1'; 
-                        imageLoaders[imageIndex].classList.remove('active'); 
-                        previewUrl = fullUrlOnHfSpace; // Keep original HF URL for potential later upload to AISADA
-                        updateStatus(`مرحله ۲: تصویر ${imageIndex + 1} در حال بارگذاری پیش‌نمایش...`, "info", true); 
-                    } 
+            // listenToGradioSse: Listen for the full completion of image generation
+            const imageResult = await listenToGradioSse(HF_SPACE_URL_BASE, sessionHash, eventId, `ImageGenerator-${imageIndex}`, (eventData) => { 
+                // We're no longer relying on process_generating previews for img src directly,
+                // but this callback still updates status for user feedback.
+                if (eventData.msg === "process_generating" && eventData.output && eventData.output.data) { 
+                     updateStatus(`مرحله ۲: تصویر ${imageIndex + 1} در حال دریافت پیش‌نمایش...`, "info", true); 
                 } else if (eventData.msg === "process_generating" && eventData.log) { 
                     updateStatus(`مرحله ۲: تصویر ${imageIndex + 1}: ${eventData.log}`, "info", true); 
                 } 
             }); 
-            imageLoaders[imageIndex].classList.remove('active'); 
-            generatedImageItems[imageIndex].style.opacity = '1'; 
+            
+            // Check if final URL from Hugging Face is received
             if (imageResult && imageResult[0] && typeof imageResult[0] === 'object' && imageResult[0].url) { 
-                // Return the original Hugging Face URL for final processing/upload
-                const finalUrl = imageResult[0].url.startsWith("http") ? imageResult[0].url : `https://coherelabs-aya-expanse.hf.space${imageResult[0].url.startsWith('/') ? '' : '/'}${imageResult[0].url}`;
-                return finalUrl; 
-            } else if (previewUrl) { 
-                console.warn(`Final image URL not directly in process_completed for image ${imageIndex}, using last preview URL.`); 
-                return previewUrl; 
+                finalHfImageUrl = imageResult[0].url.startsWith("http") ? imageResult[0].url : `https://coherelabs-aya-expanse.hf.space${imageResult[0].url.startsWith('/') ? '' : '/'}${imageResult[0].url}`;
             } else { 
-                throw new Error(`URL تصویر نهایی برای تصویر ${imageIndex + 1} دریافت نشد.`); 
+                throw new Error(`URL تصویر نهایی برای تصویر ${imageIndex + 1} از Hugging Face دریافت نشد.`); 
             } 
-        }
+            
+            // --- گام مهم: دریافت Blob تصویر از طریق پراکسی Vercel و نمایش فوری با Object URL ---
+            updateStatus(`مرحله ۲: در حال آماده‌سازی تصویر ${imageIndex + 1} برای نمایش فوری...`, "info", true);
+            
+            const proxiedFetchUrl = `${PROXY_URL}${new URL(finalHfImageUrl).pathname + new URL(finalHfImageUrl).search}`;
+            let imageBlobForDisplayAndUpload = null;
+            let objectUrlForDisplay = null; // To store the temporary Object URL
 
-        async function uploadToAISADAAndOpenAlpha(imageUrlFromSpace, downloadButtonElement) { 
-            if (!imageUrlFromSpace) { 
-                downloadButtonElement.textContent = "خطا: URL تصویر موجود نیست."; 
-                downloadButtonElement.disabled = false; 
-                return; 
-            } 
-            downloadButtonElement.textContent = 'در حال ساخت لینک دانلود...'; 
-            downloadButtonElement.disabled = true; 
-            try { 
-                // مرحله جدید: دانلود تصویر از طریق پراکسی Vercel
-                // imageUrlFromSpace هنوز URL اصلی Hugging Face است.
-                // ما باید این درخواست را نیز از طریق پراکسی Vercel انجام دهیم.
-                const urlObjectForPath = new URL(imageUrlFromSpace);
-                const imagePathForProxy = urlObjectForPath.pathname + urlObjectForPath.search;
-                const proxiedDownloadUrl = `${PROXY_URL}${imagePathForProxy}`;
-
-                downloadButtonElement.textContent = 'دریافت فایل از سرور...';
-
-                const imageResponse = await fetch(proxiedDownloadUrl);
-
-                if (!imageResponse.ok) throw new Error(`خطا در دریافت فایل از طریق پراکسی Vercel: ${imageResponse.status}`); 
-                const imageBlob = await imageResponse.blob(); 
-                const formData = new FormData(); 
-                let filename = `generated_aya_expanse_image_${Date.now()}.webp`; 
-                try { 
-                    const urlPath = new URL(imageUrlFromSpace).pathname.split('/').pop(); 
-                    if(urlPath && urlPath.includes('.')) { 
-                        filename = urlPath.split('?')[0]; 
-                    } else { 
-                        if (imageBlob.type.includes('image/png')) filename += '.png'; 
-                        else if (imageBlob.type.includes('image/jpeg')) filename += '.jpeg'; 
-                        else filename += '.webp'; 
-                    } 
-                } catch(e){ console.warn("Could not parse filename from HF URL:", e); } 
-                formData.append('image', imageBlob, filename); 
+            try {
+                const imageResponse = await fetch(proxiedFetchUrl);
+                if (!imageResponse.ok) throw new Error(`خطا در دریافت تصویر از پراکسی Vercel: ${imageResponse.status}`);
                 
-                // آپلود به سرور نهایی شما (aisada.ir)
-                const uploadResponse = await fetch(YOUR_IMAGE_UPLOAD_SERVER_URL, { 
-                    method: 'POST', 
-                    body: formData, 
-                }); 
-                if (!uploadResponse.ok) { 
-                    const errorText = await uploadResponse.text().catch(() => `HTTP ${uploadResponse.status}`); 
-                    throw new Error(`آپلود به سرور شما ناموفق: ${errorText}`); 
-                } 
-                const uploadData = await uploadResponse.json(); 
-                if (uploadData.success && uploadData.url) { 
-                    downloadButtonElement.textContent = '✅ دانلود تصویر'; 
-                    downloadButtonElement.disabled = false; 
-                    window.open(uploadData.url, '_blank'); 
-                } else { 
-                    throw new Error(uploadData.message || 'خطا در پاسخ سرور آپلود شما.'); 
-                } 
-            } catch (error) { 
-                console.error("خطا در فرآیند دانلود و آپلود تصویر:", error); 
-                downloadButtonElement.textContent = "❌ خطا در دانلود"; 
-                downloadButtonElement.disabled = false; 
-            } 
+                imageBlobForDisplayAndUpload = await imageResponse.blob(); // دریافت داده تصویر به صورت Blob
+                objectUrlForDisplay = URL.createObjectURL(imageBlobForDisplayAndUpload); // ساخت Object URL
+                
+                // نمایش تصویر در تگ <img>
+                generatedImageItems[imageIndex].src = objectUrlForDisplay; 
+                generatedImageItems[imageIndex].style.opacity = '1'; 
+                imageLoaders[imageIndex].classList.remove('active'); 
+                console.log(`Image ${imageIndex + 1} displayed successfully using Object URL.`);
+
+            } catch (displayError) {
+                console.error(`خطا در نمایش تصویر ${imageIndex + 1} با Object URL:`, displayError);
+                generatedImageItems[imageIndex].src = ''; // Clear if display failed
+                generatedImageItems[imageIndex].alt = "خطا در نمایش تصویر";
+                imageLoaders[imageIndex].classList.remove('active'); 
+                updateStatus(`مرحله ۲: تصویر ${imageIndex + 1} ساخته شد، اما نمایش آن با خطا مواجه شد.`, "error", false);
+            }
+            
+            // --- گام دوم (پس‌زمینه): آپلود تصویر به AISADA.ir و تنظیم دکمه دانلود ---
+            const aisadaDownloadButton = downloadButtons[imageIndex];
+            aisadaDownloadButton.style.display = 'inline-flex'; // مطمئن می شویم دکمه نمایش داده می شود
+            
+            if (imageBlobForDisplayAndUpload) { // فقط اگر Blob تصویر را با موفقیت دریافت کرده باشیم آپلود می کنیم
+                // اجرای آپلود به AISADA در پس‌زمینه (بدون انتظار)
+                uploadImageToAisada(imageBlobForDisplayAndUpload, finalHfImageUrl, imageIndex)
+                    .then(aisadaUploadedUrl => {
+                        if (aisadaUploadedUrl) {
+                            aisadaDownloadButton.onclick = () => window.open(aisadaUploadedUrl, '_blank');
+                        } else {
+                            // Fallback to proxy download if AISADA upload failed
+                            aisadaDownloadButton.onclick = () => window.open(proxiedFetchUrl, '_blank');
+                        }
+                    })
+                    .catch(e => {
+                        console.error("خطای غیرمنتظره در آپلود پس‌زمینه به AISADA:", e);
+                        // Fallback to proxy download on unexpected error
+                        aisadaDownloadButton.onclick = () => window.open(proxiedFetchUrl, '_blank');
+                    });
+            } else {
+                // اگر Blob اصلا موجود نبود (مثلا fetch اولیه شکست خورده)، دکمه دانلود از پراکسی Vercel استفاده کند
+                aisadaDownloadButton.textContent = '📥 دانلود (پراکسی)';
+                aisadaDownloadButton.disabled = false;
+                aisadaDownloadButton.onclick = () => window.open(proxiedFetchUrl, '_blank');
+            }
+
+            // Cleanup: Revoke the Object URL once the image is loaded or no longer needed.
+            // For simplicity and quick iteration, we might not revoke immediately after setting src,
+            // but for long-running apps with many images, it's good for memory.
+            // Example: generatedImageItems[imageIndex].onload = () => URL.revokeObjectURL(objectUrlForDisplay);
+
+            return finalHfImageUrl; // Return original HF URL for consistency in parent function if needed
         }
-        
+
+        // تابع uploadToAISADAAndOpenAlpha دیگر نیازی نیست به صورت مستقیم توسط دکمه ها فراخوانی شود
+        // و منطق آن به generateSingleImage و تابع کمکی uploadImageToAisada منتقل شده است.
+        // این تابع فقط به عنوان یک placeholder نگه داشته شده تا خطای Uncaught ReferenceError ندهد.
+        async function uploadToAISADAAndOpenAlpha(imageUrlFromSpace, downloadButtonElement) { 
+             console.log("Old uploadToAISADAAndOpenAlpha called, logic is now in generateSingleImage.");
+             // این تابع در واقع دیگر برای آپلود یا باز کردن مستقیم از این نقطه استفاده نمی شود
+             // دکمه دانلود مستقیما با URL صحیح تنظیم شده است.
+        }
+
         async function startFullProcess(isRetry = false) { 
             if (!isRetry) { lastAttemptedPayload = { prompt: imagePromptInput.value }; } 
             else if (!lastAttemptedPayload) { updateStatus("خطا: اطلاعاتی برای تلاش مجدد موجود نیست.", "error", false); generateBtn.disabled = false; return; } 
@@ -727,16 +789,8 @@
                         () => generateSingleImage(enhancedPrompt, i), 3, 2500, onRetryCallback 
                     ); 
                     finalGeneratedImageUrlsFromSpace[i] = imageUrl; 
-                    // Note: generatedImageItems[i].src is already set in generateSingleImage for preview.
-                    // If you want to ensure the final, full-res image is displayed, you might update it here.
-                    // But for now, the preview is good enough and the download button uses the finalUrl.
-                    
-                    generatedImageItems[i].style.opacity = '1'; 
-                    imageLoaders[i].classList.remove('active'); 
-                    generatedImageItems[i].onload = () => { console.log(`Image ${i+1} loaded: ${imageUrl}`); }; 
-                    generatedImageItems[i].onerror = () => { console.error(`خطا در بارگذاری تگ <img> برای URL: ${imageUrl}`); }; 
-                    downloadButtons[i].style.display = 'inline-flex'; 
-                    downloadButtons[i].onclick = () => uploadToAISADAAndOpenAlpha(imageUrl, downloadButtons[i]); 
+                    // imageLoader.classList.remove('active') و img.src و img.opacity قبلا در generateSingleImage تنظیم شده اند
+                    // downloadButton هم در generateSingleImage تنظیم شده است.
                 } 
                 updateStatus("تمام تصاویر با موفقیت ساخته شدند!", "success", false); 
             } catch (error) { 
@@ -761,28 +815,7 @@
                 imageLoaders.forEach(loader => loader.classList.remove('active')); 
             } 
         }
-        
-        copyDescriptionBtn.addEventListener('click', async () => { 
-            const textToCopy = descriptionTextContentP.textContent; 
-            if (textToCopy) { 
-                try { 
-                    await navigator.clipboard.writeText(textToCopy); 
-                    copyStatusMessage.textContent = 'کپی شد!'; 
-                    copyStatusMessage.style.color = 'var(--igadlm-alpha-color-success)'; 
-                    copyStatusMessage.style.opacity = '1'; 
-                    copyStatusMessage.style.display = 'block'; 
-                    setTimeout(() => { copyStatusMessage.style.opacity = '0'; copyStatusMessage.style.display = 'none'; }, 2000); 
-                } catch (err) { 
-                    console.error('Failed to copy text: ', err); 
-                    copyStatusMessage.textContent = 'خطا!'; 
-                    copyStatusMessage.style.color = 'var(--igadlm-alpha-color-error)'; 
-                    copyStatusMessage.style.opacity = '1'; 
-                    copyStatusMessage.style.display = 'block'; 
-                    setTimeout(() => { copyStatusMessage.style.opacity = '0'; copyStatusMessage.style.display = 'none'; }, 2000); 
-                } 
-            } 
-        });
-        
+        copyDescriptionBtn.addEventListener('click', async () => { const textToCopy = descriptionTextContentP.textContent; if (textToCopy) { try { await navigator.clipboard.writeText(textToCopy); copyStatusMessage.textContent = 'کپی شد!'; copyStatusMessage.style.color = 'var(--igadlm-alpha-color-success)'; copyStatusMessage.style.opacity = '1'; copyStatusMessage.style.display = 'block'; setTimeout(() => { copyStatusMessage.style.opacity = '0'; copyStatusMessage.style.display = 'none'; }, 2000); } catch (err) { console.error('Failed to copy text: ', err); copyStatusMessage.textContent = 'خطا!'; copyStatusMessage.style.color = 'var(--igadlm-alpha-color-error)'; copyStatusMessage.style.opacity = '1'; copyStatusMessage.style.display = 'block'; setTimeout(() => { copyStatusMessage.style.opacity = '0'; copyStatusMessage.style.display = 'none'; }, 2000); } } });
         generateBtn.addEventListener('click', () => startFullProcess(false));
         showMainForm();
         updateStatus("وضعیت: آماده برای تولید تصویر.", "info", false);
@@ -954,4 +987,5 @@
 
     })();
 </script>
-</p>
+</body>
+</html>
