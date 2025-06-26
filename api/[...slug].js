@@ -1,4 +1,4 @@
-// نام فایل جدید: api/[...slug].js
+// نامم فایل جدید: api/[...slug].js
 
 export const config = {
   runtime: 'edge',
