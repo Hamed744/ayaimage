@@ -1,0 +1,18 @@
+{
+  "functions": {
+    "api/proxy.js": {
+      "maxDuration": 300,
+      "memory": 1024
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/proxy.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
